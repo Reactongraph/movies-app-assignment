@@ -4,9 +4,9 @@ import React from "react";
 const Login = () => {
   return (
     <>
-      <div className="h-screen flex w-full items-center justify-between flex-col">
+      <div className="h-screen flex w-full items-center justify-between flex-col sm:px-0 px-[20px]">
         <div className="max-w-[300px] w-full h-[calc(100vh_-_118px)] flex flex-col items-center justify-center">
-          <p className="font-mont text-[64px] font-semibold leading-[80px] mb-[40px] text-center  ">
+          <p className="font-mont sm:text-[64px] text-[48px] font-semibold leading-[80px] mb-[40px] text-center">
             Sign in
           </p>
 

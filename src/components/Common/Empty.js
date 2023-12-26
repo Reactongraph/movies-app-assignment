@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 export const Empty = () => {
   const router = useRouter();
   return (
-    <div className="h-[calc(100vh_-_118px)] flex items-center justify-center flex-col gap-[40px]">
-      <p className="font-mont text-[48px] font-semibold leading-[56px]">
+    <div className="h-[calc(100vh_-_118px)] flex items-center justify-center flex-col gap-[40px] px-[20px]">
+      <p className="font-mont text-[32px] font-semibold sm:leading-[56px] leading-[40px] sm:text-[40px] text-center">
         Your movie list is empty
       </p>
       <button

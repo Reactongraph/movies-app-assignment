@@ -7,11 +7,11 @@ import { Empty } from "@/components/Common/Empty";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [getPost, { data, isLoading }] = useGetPostMutation();
+  // const [getPost, { data, isLoading }] = useGetPostMutation();
 
-  useEffect(() => {
-    getPost();
-  }, []);
+  // useEffect(() => {
+  //   getPost();
+  // }, []);
 
   const router = useRouter();
 
