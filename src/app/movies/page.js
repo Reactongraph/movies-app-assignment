@@ -46,7 +46,8 @@ export default function Home() {
                 return (
                   <div
                     key={index}
-                    className="bg-[#092C39] pt-[8px] px-[8px] pb-[12px] rounded-[8px]"
+                    className="bg-[#092C39] pt-[8px] px-[8px] pb-[12px] rounded-[8px] cursor-pointer"
+                    onClick={() => router.push(`/movies/edit/${index + 1}`)}
                   >
                     <img src={poster} className="mb-[16px]" />
                     <p className="font-mont text-[20px] font-medium leading-[32px] mb-[8px]">
