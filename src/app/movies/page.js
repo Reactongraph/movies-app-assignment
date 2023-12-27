@@ -6,11 +6,23 @@ import { useEffect, useState } from "react";
 import { Empty } from "@/components/Common/Empty";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Common/Pagination";
+import { signOut } from "next-auth/react";
+import { useSnackbar } from "notistack";
 
 export default function Home() {
   // const [getPost, { data, isLoading }] = useGetPostMutation();
   const [state, setState] = useState("");
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleLogout = () => {
+    signOut();
+
+    enqueueSnackbar("Logout successful", {
+      preventDuplicate: true,
+      variant: "success",
+    });
+  };
 
   useEffect(() => {
     getPost();
@@ -52,15 +64,18 @@ export default function Home() {
                   onClick={() => router.push("/movies/new")}
                 />
               </div>
-              <div className="flex items-center justify-center gap-[12px]">
-                <p className="font-mont text-[16px] font-bold leading-[24px] md:d-block d-hidden">
+              <div
+                className="flex items-center justify-center gap-[12px] cursor-pointer"
+                onClick={() => handleLogout()}
+              >
+                <p class="font-mont text-[16px] font-bold leading-[24px] hidden sm:block">
                   Logout
                 </p>
                 <img src="/logout.svg" alt="image" />
               </div>
             </div>
 
-            <div className="mt-[120px] flex sm:gap-[24px] gap-[20px] flex-row flex-wrap justify-center">
+            <div className="sm:mt-[120px] mt-[80px] flex sm:gap-[24px] gap-[20px] flex-row flex-wrap justify-center">
               {MoviesData?.map((item, index) => {
                 const { poster, publishingyear, title } = item;
                 return (
