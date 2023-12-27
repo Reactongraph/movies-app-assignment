@@ -2,9 +2,10 @@
 import Footer from "@/components/Footer";
 import { MoviesData } from "./data";
 // import { useGetPostMutation } from "@/store/Features/movies/movieApiSlice";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Empty } from "@/components/Common/Empty";
 import { useRouter } from "next/navigation";
+import Pagination from "@/components/Common/Pagination";
 
 export default function Home() {
   // const [getPost, { data, isLoading }] = useGetPostMutation();
@@ -63,6 +64,7 @@ export default function Home() {
                 );
               })}
             </div>
+            <Pagination />
           </main>
         </>
       ) : (
