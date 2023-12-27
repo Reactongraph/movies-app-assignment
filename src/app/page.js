@@ -18,7 +18,6 @@ const Login = () => {
   } = useForm({});
 
   const handleLogin = async (data) => {
-    console.log(data, "data");
     setLoading(true);
     try {
       const signInResponse = await signIn("credentials", {
@@ -26,8 +25,6 @@ const Login = () => {
         password: data.password,
         redirect: false,
       });
-
-      console.log(signInResponse);
 
       if (signInResponse && !signInResponse.error) {
         console.log("Sign-in successful");
@@ -44,7 +41,10 @@ const Login = () => {
   return (
     <>
       <div className="h-screen flex w-full items-center justify-between flex-col">
-        <form onSubmit={handleSubmit(handleLogin)}>
+        <form
+          onSubmit={handleSubmit(handleLogin)}
+          className="max-w-[300px] w-full"
+        >
           <div className="max-w-[300px] w-full h-[calc(100vh_-_118px)] flex flex-col items-center justify-center">
             <p className="font-mont text-[64px] font-semibold leading-[80px] mb-[40px] text-center  ">
               Sign in
@@ -88,8 +88,8 @@ const Login = () => {
               Login
             </button>
           </div>
-          <Footer />
         </form>
+        <Footer />
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import { MoviesData } from "./data";
 import { Empty } from "@/components/Common/Empty";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Common/Pagination";
+import { signOut } from "next-auth/react";
 
 export default function Home() {
   // const [getPost, { data, isLoading }] = useGetPostMutation();
@@ -33,7 +34,10 @@ export default function Home() {
                   onClick={() => router.push("/movies/new")}
                 />
               </div>
-              <div className="flex items-center justify-center gap-[12px]">
+              <div
+                className="flex items-center justify-center gap-[12px] cursor-pointer"
+                onClick={() => signOut()}
+              >
                 <p className="font-mont text-[16px] font-bold leading-[24px] md:d-block d-hidden">
                   Logout
                 </p>
