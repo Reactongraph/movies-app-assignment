@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/components/Footer";
 import { MoviesData } from "./data";
-// import { useGetPostMutation } from "@/store/Features/movies/movieApiSlice";
+import { useGetPostMutation } from "@/store/Features/movies/movieApiSlice";
 import { useEffect, useState } from "react";
 import { Empty } from "@/components/Common/Empty";
 import { useRouter } from "next/navigation";
@@ -10,10 +10,12 @@ import { signOut } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
 export default function Home() {
-  // const [getPost, { data, isLoading }] = useGetPostMutation();
+  const [getPost, { data, isLoading }] = useGetPostMutation();
   const [state, setState] = useState("");
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+
+  console.log(data, "data======>");
 
   const handleLogout = () => {
     signOut();
@@ -28,24 +30,26 @@ export default function Home() {
     getPost();
   }, []);
 
-  const getPost = async () => {
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(`${apiUrl}/upload`, {
-        method: "GET",
-      });
+  // const getPost = async () => {
+  //   try {
+  //     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  //     const res = await fetch(`${apiUrl}/upload`, {
+  //       method: "GET",
+  //     });
 
-      const dataImage = await res.json();
-      setState(dataImage.movieData[11]);
-      if (res.ok) {
-        // router.push("/");
-      } else {
-        throw new Error("Failed to create a movie");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     const dataImage = await res.json();
+
+  //     console.log(dataImage, "dataImage====>");
+  //     setState(dataImage.movieData[11]);
+  //     if (res.ok) {
+  //       // router.push("/");
+  //     } else {
+  //       throw new Error("Failed to create a movie");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>

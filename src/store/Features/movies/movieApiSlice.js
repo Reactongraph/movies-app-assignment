@@ -4,7 +4,7 @@ export const eventApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPost: builder.mutation({
       query: () => ({
-        url: `/posts`,
+        url: `/upload`,
         method: "GET",
       }),
     }),
