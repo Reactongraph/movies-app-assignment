@@ -2,19 +2,38 @@
 import Footer from "@/components/Footer";
 import { MoviesData } from "./data";
 // import { useGetPostMutation } from "@/store/Features/movies/movieApiSlice";
-// import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Empty } from "@/components/Common/Empty";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Common/Pagination";
 
 export default function Home() {
   // const [getPost, { data, isLoading }] = useGetPostMutation();
-
-  // useEffect(() => {
-  //   getPost();
-  // }, []);
-
+  const [state, setState] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    getPost();
+  }, []);
+
+  const getPost = async () => {
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const res = await fetch(`${apiUrl}/upload`, {
+        method: "GET",
+      });
+
+      const dataImage = await res.json();
+      setState(dataImage.movieData[11]);
+      if (res.ok) {
+        // router.push("/");
+      } else {
+        throw new Error("Failed to create a movie");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>

@@ -45,6 +45,19 @@ export const authOptions = {
   pages: {
     signIn: "/",
   },
+  callbacks: {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update") {
+        return { ...token, ...session.user };
+      }
+      return { ...token, ...user };
+    },
+
+    async session({ session, token }) {
+      session.user = token;
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
