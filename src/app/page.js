@@ -6,11 +6,13 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { validationRules } from "@/utlils/validation";
+import { useSnackbar } from "notistack";
 
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   const {
     register,
@@ -28,11 +30,19 @@ const Login = () => {
       });
 
       if (signInResponse && !signInResponse.error) {
-        console.log("Sign-in successful");
+        enqueueSnackbar("Login successful", {
+          preventDuplicate: true,
+          variant: "success",
+        });
         router.push("/movies");
       } else {
         // Handle sign-in error
-        console.error("Sign-in error:", signInResponse.error);
+        console.error("Incorrect Email", signInResponse.error);
+
+        enqueueSnackbar("Incorrect Email and Password", {
+          preventDuplicate: true,
+          variant: "error",
+        });
       }
     } catch (error) {
       // Handle unexpected errors
@@ -100,7 +110,7 @@ const Login = () => {
 
             <button
               type="submit"
-              class="text-white bg-[#2BD17E] hover:bg-[#2BD17E] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px]"
+              class="text-white bg-[#2BD17E] hover:bg-[#2BD17E] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px] cursor-pointer"
             >
               Login
             </button>

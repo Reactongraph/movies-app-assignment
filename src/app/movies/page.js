@@ -7,6 +7,7 @@ import { Empty } from "@/components/Common/Empty";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Common/Pagination";
 import { signOut } from "next-auth/react";
+import { useSnackbar } from "notistack";
 
 export default function Home() {
   // const [getPost, { data, isLoading }] = useGetPostMutation();
@@ -16,6 +17,16 @@ export default function Home() {
   // }, []);
 
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleLogout = () => {
+    signOut();
+
+    enqueueSnackbar("Logout successful", {
+      preventDuplicate: true,
+      variant: "success",
+    });
+  };
 
   return (
     <>
@@ -36,7 +47,7 @@ export default function Home() {
               </div>
               <div
                 className="flex items-center justify-center gap-[12px] cursor-pointer"
-                onClick={() => signOut()}
+                onClick={() => handleLogout()}
               >
                 <p class="font-mont text-[16px] font-bold leading-[24px] hidden sm:block">
                   Logout

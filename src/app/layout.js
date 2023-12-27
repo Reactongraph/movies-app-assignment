@@ -4,6 +4,7 @@ import Providers from "@/store/provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../lib/auth";
 import { NextAuthProvider } from "../lib/authProvider";
+import SnackProvider from "@/lib/SnackProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,9 +26,11 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body className={inter.className}>
-        <Providers>
-          <NextAuthProvider session={session}>{children}</NextAuthProvider>
-        </Providers>
+        <SnackProvider>
+          <Providers>
+            <NextAuthProvider session={session}>{children}</NextAuthProvider>
+          </Providers>
+        </SnackProvider>
       </body>
     </html>
   );
