@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import Dropzone from "react-dropzone";
+import { useRouter } from "next/navigation";
 
 const New = () => {
+  const router = useRouter();
   return (
     <div className="sm:px-[120px] sm:py-[120px] px-[24px] py-[80px]">
       <p className="font-mont text-[48px] font-semibold sm:mb-[120px] mb-[80px]">
@@ -48,7 +50,10 @@ const New = () => {
           />
 
           <div className="gap-x-[16px] hidden sm:flex">
-            <button class="text-white bg-[#093545] hover:bg-[#093545] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px] max-w-[167px] border border-solid border-white">
+            <button
+              class="text-white bg-[#093545] hover:bg-[#093545] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px] max-w-[167px] border border-solid border-white"
+              onClick={() => router.push("/movies")}
+            >
               Cancel
             </button>
             <button class="text-white bg-[#2BD17E] hover:bg-[#2BD17E] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px] max-w-[167px]">
@@ -59,7 +64,10 @@ const New = () => {
       </div>
 
       <div className="gap-x-[16px] flex sm:hidden mt-[40px] justify-center">
-        <button class="text-white bg-[#093545] hover:bg-[#093545] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px] max-w-[167px] border border-solid border-white">
+        <button
+          class="text-white bg-[#093545] hover:bg-[#093545] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px] max-w-[167px] border border-solid border-white"
+          onClick={() => router.push("/movies")}
+        >
           Cancel
         </button>
         <button class="text-white bg-[#2BD17E] hover:bg-[#2BD17E] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px] max-w-[167px]">
