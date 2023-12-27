@@ -3,15 +3,19 @@ import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
-import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
 
 const New = () => {
   const [image, setImage] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
+
   const router = useRouter();
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm({});
 
@@ -32,6 +36,13 @@ const New = () => {
 
       if (res.ok) {
         // router.push("/");
+        reset();
+        setImage([]);
+        setImagePreview(null);
+        enqueueSnackbar("Successfully uploaded", {
+          preventDuplicate: true,
+          variant: "success",
+        });
       } else {
         throw new Error("Failed to create a movie");
       }
@@ -61,7 +72,12 @@ const New = () => {
             control={control}
             defaultValue={null}
             render={({ field }) => (
-              <Dropzone onDrop={(files) => setImage(files[0])}>
+              <Dropzone
+                onDrop={(files) => {
+                  setImage(files[0]);
+                  setImagePreview(URL.createObjectURL(files[0]));
+                }}
+              >
                 {({ getRootProps, getInputProps }) => (
                   <div className="sm:max-w-[473px] max-w-full min-h-[504px] w-full rounded-10 border-2 border-dashed border-white bg-[#224957]">
                     <div
@@ -77,8 +93,17 @@ const New = () => {
                       />
                       <div>
                         <div className="w-full flex justify-center">
-                          <img src="/filedownload.svg" alt="image" />
+                          {!imagePreview && (
+                            <img src="/filedownload.svg" alt="image" />
+                          )}
                         </div>
+                        {imagePreview && (
+                          <img
+                            src={imagePreview}
+                            alt="image preview"
+                            className="max-w-full h-auto"
+                          />
+                        )}
                         <p>Drop an image here</p>
                       </div>
                     </div>
