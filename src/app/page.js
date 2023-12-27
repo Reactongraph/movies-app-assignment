@@ -5,11 +5,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { validationRules } from "@/utlils/validation";
 
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = React.useState();
+  const [apiError, setApiError] = useState();
 
   const {
     register,
@@ -43,30 +44,46 @@ const Login = () => {
       <div className="h-screen flex w-full items-center justify-between flex-col">
         <form
           onSubmit={handleSubmit(handleLogin)}
-          className="max-w-[300px] w-full"
+          className="max-w-[300px] w-full px-2 sm:px-0"
         >
           <div className="max-w-[300px] w-full h-[calc(100vh_-_118px)] flex flex-col items-center justify-center">
-            <p className="font-mont text-[64px] font-semibold leading-[80px] mb-[40px] text-center  ">
+            <p className="font-mont sm:text-[64px] text-[48px] font-semibold leading-[80px] mb-[40px] text-center  ">
               Sign in
             </p>
 
-            <input
-              type="text"
-              id="email"
-              name="email"
-              class="bg-[#224957] border border-[#224957] text-white text-sm rounded-[10px]  p-2.5 w-full font-mont text-[14px] mb-[24px]"
-              placeholder="Email"
-              {...register("email")}
-            />
+            <div className="mb-[24px] w-full">
+              <input
+                type="text"
+                id="email"
+                name="email"
+                class="bg-[#224957] border border-[#224957] text-white text-sm rounded-[10px]  p-2.5 w-full font-mont text-[14px] "
+                placeholder="Email"
+                {...register("email", validationRules.email)}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm font-mont mt-2">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
 
-            <input
-              type="password"
-              id="password"
-              name="password"
-              class="bg-[#224957] border border-[#224957] text-white text-sm rounded-[10px] focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full font-mont text-[14px] mb-[24px]"
-              placeholder="Password"
-              {...register("password")}
-            />
+            <div className="mb-[24px] w-full">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="bg-[#224957] border border-[#224957] text-white text-sm rounded-[10px] focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full font-mont text-[14px]"
+                placeholder="Password"
+                {...register("password", validationRules.password)}
+              />
+
+              {errors.password && (
+                <p className="text-red-500 text-sm font-mont mt-2">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
             <div class="flex items-center justify-center mb-[24px]">
               <div class="flex items-center">
                 <input

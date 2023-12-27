@@ -38,14 +38,14 @@ export default function Home() {
                 className="flex items-center justify-center gap-[12px] cursor-pointer"
                 onClick={() => signOut()}
               >
-                <p className="font-mont text-[16px] font-bold leading-[24px] md:d-block d-hidden">
+                <p class="font-mont text-[16px] font-bold leading-[24px] hidden sm:block">
                   Logout
                 </p>
                 <img src="/logout.svg" alt="image" />
               </div>
             </div>
 
-            <div className="mt-[120px] flex sm:gap-[24px] gap-[20px] flex-row flex-wrap justify-center">
+            <div className="sm:mt-[120px] mt-[80px] flex sm:gap-[24px] gap-[20px] flex-row flex-wrap justify-center">
               {MoviesData?.map((item, index) => {
                 const { poster, publishingyear, title } = item;
                 return (
