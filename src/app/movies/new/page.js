@@ -35,7 +35,7 @@ const New = () => {
       });
 
       if (res.ok) {
-        // router.push("/");
+   
         reset();
         setImage([]);
         setImagePreview(null);
