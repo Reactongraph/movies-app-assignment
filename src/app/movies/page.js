@@ -65,7 +65,7 @@ export default function Home() {
                   <div
                     key={index}
                     className="bg-[#092C39] pt-[8px] px-[8px] pb-[12px] rounded-[8px] cursor-pointer"
-                    onClick={() => router.push(`/movies/edit/${index + 1}`)}
+                    onClick={() => router.push(`/movies/edit/${item._id}`)}
                   >
                     <img
                       src={`data:image/jpeg;base64,${image[0]}`}
