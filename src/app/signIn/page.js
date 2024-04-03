@@ -7,9 +7,8 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { validationRules } from "@/utlils/validation";
 import { useSnackbar } from "notistack";
-import Link from "next/link";
 
-const Login = () => {
+const SignIn = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState();
@@ -21,26 +20,31 @@ const Login = () => {
     formState: { errors },
   } = useForm({});
 
-  const handleLogin = async (data) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  const handleSignIn = async (data) => {
     setLoading(true);
     try {
-      const signInResponse = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
+      const signInResponse = await fetch(`${apiUrl}/signin/`, {
+        method: "POST",
+        body: JSON.stringify(data), // Make sure to stringify the data if it's an object
+        headers: {
+          "Content-Type": "application/json", // Specify content type as JSON
+        },
       });
-
-      if (signInResponse && !signInResponse.error) {
-        enqueueSnackbar("Login successful", {
+      if (signInResponse.ok) {
+        console.log("sign in successful", signInResponse);
+        enqueueSnackbar("sign in successful", {
           preventDuplicate: true,
           variant: "success",
         });
-        router.push("/movies");
+        router.push("/");
+        // Redirect or perform any other actions upon successful sign-in
       } else {
+        const responseData = await signInResponse.json();
         // Handle sign-in error
-        console.error("Incorrect Email", signInResponse.error);
-
-        enqueueSnackbar("Incorrect Email and Password", {
+        console.error("Sign-in error:", responseData.error);
+        enqueueSnackbar("Use another Email Id, Already exist", {
           preventDuplicate: true,
           variant: "error",
         });
@@ -54,13 +58,14 @@ const Login = () => {
     <>
       <div className="h-screen flex w-full items-center justify-between flex-col">
         <form
-          onSubmit={handleSubmit(handleLogin)}
+          onSubmit={handleSubmit(handleSignIn)}
           className="max-w-[300px] w-full px-2 sm:px-0"
         >
           <div className="max-w-[300px] w-full h-[calc(100vh_-_118px)] flex flex-col items-center justify-center">
             <p className="font-mont sm:text-[64px] text-[48px] font-semibold leading-[80px] mb-[40px] text-center  ">
-              Log in
+              Sign in
             </p>
+
             <div className="mb-[24px] w-full">
               <input
                 type="text"
@@ -76,6 +81,7 @@ const Login = () => {
                 </p>
               )}
             </div>
+
             <div className="mb-[24px] w-full">
               <input
                 type="password"
@@ -92,43 +98,12 @@ const Login = () => {
                 </p>
               )}
             </div>
-            <div class="flex items-center justify-center  mb-[20px]">
-              <div class="flex items-center">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  value=""
-                  class="w-4 h-4 border border-gray-300 rounded-[5px] bg-[#224957] focus:ring-3 focus:ring-blue-300"
-                />
-              </div>
-              <label for="remember" class="ms-2 text-[14px] font-mont">
-                Remember me
-              </label>
-            </div>
 
-            <h6 className="mb-[15px]">
-              Click for{" "}
-              <Link href="/signIn" passHref legacyBehavior>
-                <a className="signInLink">Sign In</a>
-              </Link>
-              <style jsx>{`
-                .signInLink {
-                  color: blue;
-                  text-decoration: none;
-                  border-bottom: 1px solid transparent;
-                  transition: border-color 0.2s ease-in-out;
-                }
-
-                .signInLink:hover {
-                  border-color: blue;
-                }
-              `}</style>
-            </h6>
             <button
               type="submit"
               class="text-white bg-[#2BD17E] hover:bg-[#2BD17E] font-bold rounded-[10px] text-[16px] w-full text-center py-[15px] cursor-pointer"
             >
-              Login
+              Sign In
             </button>
           </div>
         </form>
@@ -138,4 +113,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn;
